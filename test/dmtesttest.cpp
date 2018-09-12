@@ -3,6 +3,7 @@
 #include "dmutil.h"
 #include "dmtypes.h"
 #include "dmformat.h"
+#include "dmtime.h"
 #include <gtest/gtest.h>
 
 TEST(dmformat, dmformat) {
