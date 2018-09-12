@@ -1,10 +1,10 @@
+#include <gtest/gtest.h>
 
 #include "dmos.h"
 #include "dmutil.h"
 #include "dmtypes.h"
 #include "dmformat.h"
 #include "dmtime.h"
-#include <gtest/gtest.h>
 
 TEST(dmformat, dmformat) {
     std::cout << fmt::format("{0},{1},{2}", "a", "b", "c") << std::endl;
