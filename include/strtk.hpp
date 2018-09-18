@@ -4268,7 +4268,7 @@ inline std::string convert_bin_to_hex( const std::string& binary_data ) {
 }
 
 inline bool convert_hex_to_bin( const unsigned char* begin,
-                                const unsigned char* end, unsigned char* out ) {
+                                const unsigned char* end, std::string* out) {
     const std::size_t length = std::distance( begin, end );
 
     if ( 0 == length ) {
@@ -4316,9 +4316,8 @@ inline bool convert_hex_to_bin( const unsigned char* begin,
     const unsigned char* itr = begin;
 
     while ( end != itr ) {
-        *reinterpret_cast<unsigned char*>( out ) = static_cast<unsigned char>
-                ( hex_to_bin[itr[0]] << 4 | hex_to_bin[itr[1]] );
-        ++out;
+        out->push_back(static_cast<char>(hex_to_bin[itr[0]] << 4 | hex_to_bin[itr[1]]));
+
         itr += 2;
     }
 
@@ -4326,28 +4325,28 @@ inline bool convert_hex_to_bin( const unsigned char* begin,
 }
 
 inline bool convert_hex_to_bin( const char* begin, const char* end,
-                                char* out ) {
+                                std::string* out ) {
     return convert_hex_to_bin( reinterpret_cast<const unsigned char*>( begin ),
                                reinterpret_cast<const unsigned char*>( end ),
-                               reinterpret_cast<unsigned char*>( out ) );
+                               out);
 }
 
 inline bool convert_hex_to_bin( const std::pair<unsigned char*, unsigned char*>&
-                                r, unsigned char* out ) {
+                                r, std::string* out) {
     return convert_hex_to_bin( r.first, r.second, out );
 }
 
 inline bool convert_hex_to_bin( const
-                                std::pair<const unsigned char*, const unsigned char*>& r, unsigned char* out ) {
+                                std::pair<const unsigned char*, const unsigned char*>& r, std::string* out) {
     return convert_hex_to_bin( r.first, r.second, out );
 }
 
-inline bool convert_hex_to_bin( const std::pair<char*, char*>& r, char* out ) {
+inline bool convert_hex_to_bin( const std::pair<char*, char*>& r, std::string* out) {
     return convert_hex_to_bin( r.first, r.second, out );
 }
 
 inline bool convert_hex_to_bin( const std::pair<const char*, const char*>& r,
-                                char* out ) {
+    std::string* out) {
     return convert_hex_to_bin( r.first, r.second, out );
 }
 
@@ -4357,10 +4356,10 @@ inline bool convert_hex_to_bin( const std::string& hex_data,
         return false;
     }
 
-    output.resize( hex_data.size() >> 1 );
+    //output.resize( hex_data.size() >> 1 );
     return convert_hex_to_bin( hex_data.data(),
                                hex_data.data() + hex_data.size(),
-                               const_cast<char*>( output.data() ) );
+                               &output);
 }
 
 inline std::size_t convert_bin_to_base64( const unsigned char* begin,
@@ -15782,7 +15781,7 @@ class hex_to_string_sink {
         s_.resize( ( size - offset ) / 2 );
         valid_ = convert_hex_to_bin( s.first + offset,
                                      s.second,
-                                     const_cast<char*>( s_.data() ) );
+                                     &s_);
         return ( *this );
     }
 
