@@ -108,6 +108,7 @@ static bool DMIsDirectory( const char* dir_name ) {
     return false;
 #endif
 }
+
 static inline bool DMCreateDirectory(const char* dir_name) {
 #ifdef WIN32
     int ret = mkdir(dir_name);
@@ -122,12 +123,9 @@ static inline bool DMCreateDirectory(const char* dir_name) {
     return true;
 }
 
-static inline bool DMCreateDirectories(const char* dir_name)
-{
-    if (access(dir_name, 0) == 0)
-    {
-        if (DMIsDirectory(dir_name))
-        {
+static inline bool DMCreateDirectories(const char* dir_name){
+    if (access(dir_name, 0) == 0){
+        if (DMIsDirectory(dir_name)){
             return true;
         }
         return false;
@@ -140,8 +138,7 @@ static inline bool DMCreateDirectories(const char* dir_name)
 #else
     char* p = strrchr(path, '//');
 #endif
-    if (NULL == p)
-    {
+    if (NULL == p){
         return DMCreateDirectory(path);
     }
     *(p) = '\0';
