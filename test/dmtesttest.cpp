@@ -5,8 +5,16 @@
 #include "dmtypes.h"
 #include "dmformat.h"
 #include "dmtime.h"
+#include <algorithm>
+
+#define NOMINMAX
 
 TEST(dmformat, dmformat) {
+    char szBuf[5] = "1111";
+    szBuf[sizeof(szBuf) - 1] = '1';
+    strncpy(szBuf, "1", std::min( strlen("1")+1, sizeof(szBuf)));
+    szBuf[sizeof(szBuf) - 1] = '\0';
+
     std::cout << fmt::format("{0},{1},{2}", "a", "b", "c") << std::endl;
     std::cout << fmt::format("{2},{1},{0}", "a", "b", "c") << std::endl;
     std::cout << fmt::format("{:%Y-%m-%d %H:%M:%S}", fmt::localtime(time(NULL))) << std::endl;
@@ -20,4 +28,21 @@ TEST(dmformat, dmformat) {
     char name[] = "fmt";
     std::string strName = "{}";
     strName = fmt::format(strName, name);
+}
+
+void f()
+{
+
+    //////////////////////////////////////////////////////////////////////////
+    int a = 0;
+    printf("%d\n", *(&a + 20));
+    *(&a + 20) = 456;
+}
+
+TEST(main, main) {
+    int a = 123;
+    printf("%x\n", &a);
+    printf("%d\n", a);
+    f();
+    printf("%d\n", a);
 }
