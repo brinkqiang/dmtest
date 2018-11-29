@@ -32,16 +32,20 @@ TEST(dmformat, dmformat) {
 
 void f()
 {
+    int b = 0;
 
-    //////////////////////////////////////////////////////////////////////////
-    int a = 0;
-    printf("%d\n", *(&a + 20));
-    *(&a + 20) = 456;
+    for (int i=14; i < 64; ++i)
+    {
+        if (*(&b+i) == 123)
+        {
+            *(&b + i) = 456;
+            break;
+        }
+    }
 }
 
 TEST(main, main) {
     int a = 123;
-    printf("%x\n", &a);
     printf("%d\n", a);
     f();
     printf("%d\n", a);
