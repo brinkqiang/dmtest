@@ -56,8 +56,14 @@ struct LuaRead<int64_t>
     }
 };
 
+template<typename T>
+T LuaPop()
+{
+    return LuaRead<T>::Read();
+}
+
 TEST(main, main) {
 
-    int i = LuaRead<int64_t>::Read();
-    int j = LuaRead<uint64_t>::Read();
+    int i = LuaPop<int64_t>();
+    int j = LuaPop<uint64_t>();
 }
