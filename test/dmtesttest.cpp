@@ -62,9 +62,27 @@ T LuaPop()
     return LuaRead<T>::Read();
 }
 
+template<typename T>
+static T TestRead()
+{
+    return T();
+}
+
+template<>
+static int64_t TestRead()
+{
+    return 1;
+}
+
+template<>
+static uint64_t TestRead()
+{
+    return 2;
+}
+
 TEST(main, main) {
 
-    int i = LuaPop<int64_t>();
-    int j = LuaPop<uint64_t>();
+    int i = TestRead<int64_t>();
+    int j = TestRead<uint64_t>();
     std::cout << i << " " << j << std::endl;
 }
