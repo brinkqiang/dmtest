@@ -66,4 +66,5 @@ TEST(main, main) {
 
     int i = LuaPop<int64_t>();
     int j = LuaPop<uint64_t>();
+    std::cout << i << " " << j << std::endl;
 }
